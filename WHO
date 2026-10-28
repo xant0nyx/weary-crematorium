@@ -1,0 +1,15 @@
+/* USER CODE BEGIN 2 */
+uint8_t mag_addr = 0x3C;        // Dirección I2C del magnetómetro (0x1E << 1)
+uint8_t reg_who_am_i = 0x4F;    // Dirección del registro WHO_AM_I_M
+uint8_t val_who_am_i = 0;
+
+// Leer 1 byte usando HAL_I2C_Mem_Read
+if (HAL_I2C_Mem_Read(&hi2c1, mag_addr, reg_who_am_i, I2C_MEMADD_SIZE_8BIT, &val_who_am_i, 1, 100) == HAL_OK) {
+    printf("Registro WHO_AM_I_M: 0x%02X\r\n", val_who_am_i);
+    if(val_who_am_i == 0x40) {
+        printf("Sensor LSM303AGR detectado correctamente.\r\n");
+    }
+} else {
+    printf("Error de comunicacion I2C.\r\n");
+}
+/* USER CODE END 2 */
